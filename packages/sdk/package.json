@@ -1,0 +1,10 @@
+{
+  "name": "@interpres/sdk",
+  "version": "1.0.0",
+  "description": "Zero-dependency TypeScript SDK for Interpres OTC settlement math, bounded concession curves, and Robinhood Chain (4663) contract bindings.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "license": "MIT"
+}

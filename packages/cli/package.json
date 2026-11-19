@@ -1,0 +1,10 @@
+{
+  "name": "@interpres/cli",
+  "version": "1.0.0",
+  "description": "Command-line toolkit for Interpres OTC quotes, negotiation simulations, and Robinhood Chain (4663) contract diagnostics.",
+  "type": "module",
+  "bin": {
+    "intp": "./src/intp.ts"
+  },
+  "license": "MIT"
+}

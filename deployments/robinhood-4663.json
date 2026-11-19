@@ -1,0 +1,38 @@
+{
+  "network": "Robinhood Chain Mainnet",
+  "chainId": 4663,
+  "rpcUrl": "https://rpc.mainnet.chain.robinhood.com",
+  "explorerUrl": "https://robinhoodchain.blockscout.com",
+  "compiler": {
+    "solc": "0.8.39+commit.ce47f2c8",
+    "evmVersion": "paris",
+    "optimizer": true,
+    "optimizerRuns": 200
+  },
+  "contracts": {
+    "InterpresEscrow": {
+      "address": "0x681ac9d671c612164068592fe2be7b945f3126ec",
+      "deployTxHash": "0x02ba774febe5a8fc594def1315e09f16e172dcd2893bc924d61fad2439cd7215",
+      "blockNumber": 118550538,
+      "parameters": {
+        "nativeEthSentinel": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "baseFeeBps": 20,
+        "holderFeeBps": 10,
+        "maxFeeBps": 50,
+        "holderThreshold": "10000000000000000000000"
+      }
+    },
+    "InterpresSlotPayment": {
+      "address": "0xeaaaf98e25733387facc93d7e215a9ec19415217",
+      "deployTxHash": "0x345be35491b635594f6c1d75c974c98918797b158d9286e6fce2dcb380fc2857",
+      "blockNumber": 118456671,
+      "parameters": {
+        "paymentToken": "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+        "paymentTokenSymbol": "USDG",
+        "paymentTokenDecimals": 6,
+        "slotPriceRaw": "200000",
+        "slotDurationSeconds": 2592000
+      }
+    }
+  }
+}
