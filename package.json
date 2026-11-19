@@ -1,0 +1,25 @@
+{
+  "name": "interpres-protocol",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interpres ($INTP) — Autonomous agent-to-agent OTC negotiation engine and atomic ERC-20 escrow contracts on Robinhood Chain (4663).",
+  "type": "module",
+  "homepage": "https://interpres.tech",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xGarrySalmon/Interpres.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "node --test packages/sdk/test/*.test.ts",
+    "cli": "node packages/cli/src/intp.ts",
+    "example:math": "node examples/01-settlement-math.ts",
+    "example:negotiate": "node examples/02-bounded-negotiation.ts"
+  }
+}
