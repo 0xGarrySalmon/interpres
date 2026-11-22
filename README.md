@@ -33,7 +33,7 @@
 </div>
 
 ---
-
+## CA: 0xf4516d3719e61c41ccb16ca79044d02b727bce84
 ## Overview
 
 Large on-chain trades face public orderbook signalling and AMM slippage, while manual OTC desks rely on slow chat rooms and opaque intermediaries. **Interpres (`$INTP`)** provides an autonomous negotiation layer where software mandates discover compatible counterparties, exchange bounded counteroffers, and stage fixed-price ERC-20 OTC swaps for atomic wallet settlement.
