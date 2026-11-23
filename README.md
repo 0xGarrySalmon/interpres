@@ -2,7 +2,7 @@
 
 <img src="./assets/banner.png" alt="Interpres — Where Agents Reach Agreement" width="100%" />
 
-<h3>Autonomous agent-to-agent OTC negotiation &amp; atomic ERC-20 escrow on Robinhood Chain.</h3>
+<h3>Autonomous agent-to-agent OTC negotiation &amp; atomic Native ETH / ERC-20 escrow on Robinhood Chain.</h3>
 
 <p>
   Private reservation limits · exact <code>bigint</code> net-floor guarantees · wallet-signed settlement · <code>50%</code> fee reduction for <code>$INTP</code> holders
@@ -23,7 +23,7 @@
 <p>
   <img src="https://img.shields.io/badge/Robinhood%20Chain-4663-4D8B84?style=for-the-badge&labelColor=090B10" alt="Robinhood Chain 4663" />
   <img src="https://img.shields.io/badge/Runtime%20Deps-Zero-F2EEE6?style=for-the-badge&labelColor=090B10" alt="Zero runtime dependencies" />
-  <img src="https://img.shields.io/badge/Tests-7%20passing-4F8F6B?style=for-the-badge&labelColor=090B10" alt="7 tests passing" />
+  <img src="https://img.shields.io/badge/Tests-15%20passing-4F8F6B?style=for-the-badge&labelColor=090B10" alt="15 tests passing" />
   <br />
   <img src="https://img.shields.io/badge/Solidity-0.8.28-B08D57?style=for-the-badge&labelColor=090B10" alt="Solidity 0.8.28" />
   <img src="https://img.shields.io/badge/Node-%E2%89%A5%2022.6-8A93A2?style=for-the-badge&labelColor=090B10" alt="Node 22.6+" />
@@ -36,9 +36,9 @@
 ## CA: 0xf4516d3719e61c41ccb16ca79044d02b727bce84
 ## Overview
 
-Large on-chain trades face public orderbook signalling and AMM slippage, while manual OTC desks rely on slow chat rooms and opaque intermediaries. **Interpres (`$INTP`)** provides an autonomous negotiation layer where software mandates discover compatible counterparties, exchange bounded counteroffers, and stage fixed-price ERC-20 OTC swaps for atomic wallet settlement.
+Large on-chain trades face public orderbook signalling and AMM slippage, while manual OTC desks rely on slow chat rooms and opaque intermediaries. **Interpres (`$INTP`)** provides an autonomous negotiation layer where software mandates discover compatible counterparties, exchange bounded counteroffers, and stage fixed-price Native ETH &amp; ERC-20 OTC swaps for atomic wallet settlement.
 
-Agents **never hold private keys** and **never touch funds**. Every proposal is verified in integer base units (`bigint`), private reservation limits remain hidden from counterparties, and tokens move strictly through `InterpresEscrow.sol` when both principals sign.
+Agents **never hold private keys** and **never touch funds**. Every proposal is verified in integer base units (`bigint`), private reservation limits remain hidden from counterparties, and assets move strictly through `InterpresEscrow.sol` when both principals sign.
 
 <table>
   <tr>
@@ -55,8 +55,8 @@ Agents **never hold private keys** and **never touch funds**. Every proposal is 
       Seller minimums are enforced strictly <b>net of protocol fees</b> both off-chain and inside <code>InterpresEscrow.sol</code>.
     </td>
     <td width="25%" valign="top">
-      <h4>Atomic Escrow</h4>
-      Bounded per-order ERC-20 allowances, zero fee on cancelled or expired orders, and immutable <code>MAX_FEE_BPS = 50</code> contract ceiling.
+      <h4>Native ETH &amp; ERC-20 Escrow</h4>
+      Bilateral Native ETH (<code>EIP-7528</code>) and ERC-20 settlement, exact per-order allowances, zero cancellation fee, and immutable <code>MAX_FEE_BPS = 50</code> cap.
     </td>
   </tr>
 </table>
@@ -67,8 +67,9 @@ Agents **never hold private keys** and **never touch funds**. Every proposal is 
 
 | Contract | Address | Explorer | Parameters |
 | --- | --- | --- | --- |
-| **`InterpresEscrow`** | `0x681ac9d671c612164068592fe2be7b945f3126ec` | [Blockscout ↗](https://robinhoodchain.blockscout.com/address/0x681ac9d671c612164068592fe2be7b945f3126ec) | `20 bps` base · `10 bps` `$INTP` holder · `50 bps` hard cap |
+| **`InterpresEscrow`** | `0x681ac9d671c612164068592fe2be7b945f3126ec` | [Blockscout ↗](https://robinhoodchain.blockscout.com/address/0x681ac9d671c612164068592fe2be7b945f3126ec) | Native `ETH` &amp; ERC-20 · `20 bps` base · `10 bps` `$INTP` holder · `50 bps` hard cap |
 | **`InterpresSlotPayment`** | `0xeaaaf98e25733387facc93d7e215a9ec19415217` | [Blockscout ↗](https://robinhoodchain.blockscout.com/address/0xeaaaf98e25733387facc93d7e215a9ec19415217) | `0.20 USDG` · `30 days` · anti-replay `paymentIntentId` |
+| **`$INTP` Token** | `0xf4516d3719e61c41ccb16ca79044d02b727bce84` | [Blockscout ↗](https://robinhoodchain.blockscout.com/address/0xf4516d3719e61c41ccb16ca79044d02b727bce84) · [Pons ↗](https://ponsfamily.com/launchpad/0xf4516d3719e61c41ccb16ca79044d02b727bce84) | `0%` team allocation · `10,000+ $INTP` unlocks Holder Tier |
 | **`USDG` (Quote / Billing)** | `0x5fc5360d0400a0fd4f2af552add042d716f1d168` | [Blockscout ↗](https://robinhoodchain.blockscout.com/address/0x5fc5360d0400a0fd4f2af552add042d716f1d168) | Global Dollar (`6` decimals) |
 
 ---
@@ -91,9 +92,9 @@ sequenceDiagram
     A->>A: Pair compatible intents & exchange bounded counteroffers
     A-->>S: Agreement locked (exact gross, fee, sellerNet >= minNet)
     A-->>B: Agreement locked (gross <= maxGross)
-    S->>E: approve(exact baseAmount) + createOrder(...)
-    B->>E: approve(exact quoteGross) + fulfillOrder(orderId)
-    E-->>B: Deliver escrowed base tokens
+    S->>E: Deposit Native ETH or approve(exact baseAmount) + createOrder(...)
+    B->>E: Pay Native ETH or approve(exact quoteGross) + fulfillOrder(orderId)
+    E-->>B: Deliver escrowed base assets
     E-->>S: Deliver net quote proceeds (fee routed on fill only)
 ```
 
@@ -104,11 +105,11 @@ sequenceDiagram
 | Path | Module | Contents |
 | --- | --- | --- |
 | [`contracts/`](./contracts) | Solidity (`0.8.28`) | `InterpresEscrow.sol`, `InterpresSlotPayment.sol`, and Foundry invariant tests. |
-| [`deployments/`](./deployments) | Chain Registry | Verified Robinhood Chain (`4663`) contract addresses, block numbers, and deploy transactions. |
-| [`packages/sdk`](./packages/sdk) | `@interpres/sdk` | Zero-dependency TypeScript SDK: `bigint` fee & net-floor math, bounded concession simulator, public intent projection, and EIP-4361 SIWE formatting. |
+| [`deployments/`](./deployments) | Chain Registry | Verified Robinhood Chain (`4663`) contract addresses and parameters. |
+| [`packages/sdk`](./packages/sdk) | `@interpres/sdk` | Zero-dependency TypeScript SDK: `bigint` fee &amp; net-floor math, bounded concession simulator, public intent projection, and EIP-4361 SIWE formatting. |
 | [`packages/cli`](./packages/cli) | `@interpres/cli` | `intp` CLI for settlement quotes, multi-round OTC simulations, and contract inspection. |
 | [`examples/`](./examples) | Runnable Scripts | Standalone TypeScript examples executed directly by Node `>= 22.6`. |
-| [`docs/PROTOCOL.md`](./docs/PROTOCOL.md) | Specification | Mathematical invariants, escrow state transitions, and slot entitlement rules. |
+| [`docs/PROTOCOL.md`](./docs/PROTOCOL.md) | Specification | Mathematical invariants, Native ETH &amp; ERC-20 escrow state transitions, and slot entitlement rules. |
 
 ---
 
@@ -126,7 +127,7 @@ npm run example:negotiate    # 5 WETH <-> USDG bounded multi-round convergence
 
 npm run cli -- contracts     # Print deployed Robinhood Chain (4663) contracts
 npm run cli -- quote 12820   # Compute exact fee & net proceeds for 12,820 USDG
-npm run cli -- simulate      # Simulate a multi-round WETH/USDG OTC session
+npm run cli -- simulate      # Simulate a multi-round ETH/USDG OTC session
 ```
 
 ### Building & Testing Solidity Contracts
@@ -160,7 +161,7 @@ const result = simulateBoundedNegotiation(
     id: "seller-1",
     ownerWallet: "0x1111111111111111111111111111111111111111",
     side: "SELL",
-    baseToken: DEPLOYED_CONTRACTS.weth,
+    baseToken: DEPLOYED_CONTRACTS.nativeEth,
     quoteToken: DEPLOYED_CONTRACTS.usdg,
     quantityRaw: parseTokenUnits("5", 18),
     limitQuoteRaw: parseTokenUnits("12480", 6), // Private post-fee net floor
@@ -171,7 +172,7 @@ const result = simulateBoundedNegotiation(
     id: "buyer-1",
     ownerWallet: "0x2222222222222222222222222222222222222222",
     side: "BUY",
-    baseToken: DEPLOYED_CONTRACTS.weth,
+    baseToken: DEPLOYED_CONTRACTS.nativeEth,
     quoteToken: DEPLOYED_CONTRACTS.usdg,
     quantityRaw: parseTokenUnits("5", 18),
     limitQuoteRaw: parseTokenUnits("12890", 6), // Private gross spend ceiling
@@ -190,7 +191,7 @@ const result = simulateBoundedNegotiation(
   <img src="./assets/net-floor-math.png" alt="Interpres post-fee seller net floor and $INTP fee tiers" width="100%" />
 </p>
 
-Holders keep `$INTP` directly in their wallet (no staking or lockups). `InterpresEscrow.sol` reads the seller's `$INTP` balance on-chain when an order is created and snapshots the applicable fee rate for that order:
+Holders keep `$INTP` (`0xf4516d3719e61c41ccb16ca79044d02b727bce84`) directly in their wallet (no staking or lockups). `InterpresEscrow.sol` reads the seller's `$INTP` balance on-chain when an order is created and snapshots the applicable fee rate for that order:
 
 | Tier | Required `$INTP` | OTC Settlement Fee | Concurrent Active Slots | Extra 30-Day Slot |
 | --- | ---: | ---: | ---: | ---: |

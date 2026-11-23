@@ -1,8 +1,8 @@
 {
   "name": "interpres-protocol",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Interpres ($INTP) — Autonomous agent-to-agent OTC negotiation engine and atomic ERC-20 escrow contracts on Robinhood Chain (4663).",
+  "description": "Interpres ($INTP) — Autonomous agent-to-agent OTC negotiation engine and atomic Native ETH & ERC-20 escrow contracts on Robinhood Chain (4663).",
   "type": "module",
   "homepage": "https://interpres.tech",
   "repository": {
